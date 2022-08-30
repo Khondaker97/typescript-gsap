@@ -1,5 +1,5 @@
 import React, { FC, useLayoutEffect, useRef, useState } from "react";
-import { gsap, Power3 } from "gsap";
+import { gsap } from "gsap";
 import styled from "styled-components";
 
 const CircleAnm1: FC = () => {
@@ -8,43 +8,63 @@ const CircleAnm1: FC = () => {
   let circleRedRef = useRef<HTMLDivElement>(null);
   let circleBlueRef = useRef<HTMLDivElement>(null);
 
-  const [state, setState] = useState<boolean>(false);
+  // const [state, setState] = useState<boolean>(false);
 
-  const handleExpand = () => {
-    gsap.to(circleRedRef.current, {
-      ease: Power3.easeOut,
-      width: 150,
-      height: 150,
-      duration: 0.8,
-    });
-    setState(true);
-  };
-  const handleShrink = () => {
-    gsap.to(circleRedRef.current, {
-      ease: Power3.easeOut,
-      width: 75,
-      height: 75,
-      scale: 1,
-      duration: 0.8,
-    });
-    setState(false);
-  };
+  // const handleExpand = () => {
+  //   gsap.to(circleRedRef.current, {
+  //     ease: Power3.easeOut,
+  //     width: 150,
+  //     height: 150,
+  //     duration: 0.8,
+  //   });
+  //   setState(true);
+  // };
+  // const handleShrink = () => {
+  //   gsap.to(circleRedRef.current, {
+  //     ease: Power3.easeOut,
+  //     width: 75,
+  //     height: 75,
+  //     scale: 1,
+  //     duration: 0.8,
+  //   });
+  //   setState(false);
+  // };
 
   useLayoutEffect(() => {
     if (container.current) container.current.style.visibility = "visible";
     // Target specific nested elements
     const circles = [circleRef.current, circleBlueRef.current];
-    gsap.fromTo(
+    //returns tween
+    const target = gsap.fromTo(
       circles,
       { x: 0, opacity: 0 },
       {
         x: 45,
         opacity: 1,
-        duration: 3,
+        duration: 2,
         stagger: 1,
       }
     );
-    return () => {};
+    const pumping = gsap.fromTo(
+      circleRedRef.current,
+      {
+        width: 75,
+        height: 75,
+      },
+      {
+        width: 150,
+        height: 150,
+        duration: 1.5,
+        delay: 4,
+        repeat: -1,
+        repeatDelay: 0.5,
+        yoyo: true,
+      }
+    );
+    return () => {
+      target.kill();
+      pumping.kill();
+    };
   }, []);
   return (
     <Section>
@@ -52,7 +72,7 @@ const CircleAnm1: FC = () => {
         <Circle ref={circleRef} />
         <CircleRed
           ref={circleRedRef}
-          onClick={state !== true ? handleExpand : handleShrink}
+          // onClick={state !== true ? handleExpand : handleShrink}
         />
         <CircleBlue ref={circleBlueRef} />
       </Container>
