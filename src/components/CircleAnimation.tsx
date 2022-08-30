@@ -1,6 +1,6 @@
+import React, { FC, useLayoutEffect, useRef } from "react";
 import { gsap, Power3 } from "gsap";
 import styled from "styled-components";
-import React, { FC, useLayoutEffect, useRef, useState } from "react";
 
 const CircleAnimation: FC = () => {
   //useRef callback way to grab element in typescript

@@ -1,9 +1,9 @@
 import { Fragment } from "react";
-import CircleAnimation from "./components/CircleAnimation";
+import CircleAnm2 from "./components/CircleAnm2";
 function App() {
   return (
     <Fragment>
-      <CircleAnimation />
+      <CircleAnm2 />
     </Fragment>
   );
 }
